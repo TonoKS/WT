@@ -14,7 +14,8 @@ class CategoryOfPoi(models.Model):
     category_name = models.CharField(max_length=30)
 
 class Photo(models.Model):
-    photo = models.CharField(max_length=30)
+    title = models.CharField(max_length=30)
+	
 
 class PointOfInterest(models.Model):
     user = models.ForeignKey(User)

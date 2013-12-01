@@ -1,0 +1,172 @@
+@charset "utf-8";
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background: #42413C;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+/* ~~ Selektory elementu/tagu ~~ */
+ul, ol, dl { /* Vzhledem k odlišnosti jednotlivých prohlížečů je vhodné používat v seznamech nulové odsazení a okraje. Aby nedocházelo k odchylkám, můžete hodnoty zadat buď zde nebo u položek seznamu (LI, DT, DD). Pamatujte, že pokud neurčíte konkrétnější selektor, budou zde provedené úpravy přeneseny do seznamu .nav. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* Odebráním horního okraje se můžete vyhnout situaci, kdy okraje přesáhnou určený element div. Zbývající spodní okraj zajistí oddělení od všech následujících elementů. */
+	padding-right: 15px;
+	padding-left: 15px; /* Přidáním odsazení po stranách elementů v rámci elementů div namísto jejich aplikace na samotné elementy div dojde k potlačení výpočtu rámečkového modelu. Stejného výsledku dosáhnete použitím vnořených tagů s odsazením po stranách. */
+}
+
+a img { /* Tento selektor umožňuje odebrat výchozí modré okraje, které v některých prohlížečích obklopují obrazy, v jejichž blízkosti se nachází odkaz. */
+	border: none;
+}
+/* ~~ Při tvorbě odkazů na stránce je třeba respektovat toto pořadí – včetně skupiny selektorů použitých k vytvoření efektu najetí kurzorem. ~~ */
+a:link {
+	color: #42413C;
+	text-decoration: none;
+	/*text-decoration: underline; */
+	/* Pokud není vzhled odkazů opravdu výjimečný, je vhodné k jejich rychlému odlišení používat funkci podtržení textu. */
+}
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli s klávesnicí zajistit stejný efekt najetí kurzorem, jako v případě uživatelů používajících myš. */
+	text-decoration: underline;
+}
+
+.menu_div {
+	width:500px;
+	border:solid;
+	border-width:thin;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+.menu_table {
+	padding: 0px 10px;
+	width: inherit;
+	border:medium;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.post {
+	margin-left: 20px;
+	margin-right:30px;
+	margin-top:20px;
+	padding-left:20px;
+	padding-right:30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border:2px solid;
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.post_photo_image {
+	height: 70px;
+	width: 70px;
+}
+
+.post_photo {
+	height: 70px;
+	width: 70px;
+}
+
+.comment {
+	height: 70px;
+}
+
+.post_map {
+	height: 70px;
+	width: 200px;
+}
+
+.friend {
+	border:2px solid;
+	box-shadow: 5px 5px 5px #888888;
+	margin-left: 50px;
+	float: left;
+}
+
+.friend_photo {
+	height: 150px;
+	width: 150px;
+}
+
+.places_place {
+	border:2px solid;
+	box-shadow: 5px 5px 5px #888888;
+	margin-left: 50px;
+	float: left;
+}
+
+.places_map {
+	height: 150px;
+	width: 400px;
+}
+
+
+
+/* ~~ Tento kontejner s pevnou šířkou obklopuje všechny ostatní elementy. ~~ */
+.container {
+	width: 960px;
+	background: #EEE;
+	margin: 0 auto; /* Automatická hodnota po stranách spolu s šířkou slouží k vystředění rozvržení. */
+}
+
+/* ~~ Informace o rozvržení. ~~ 
+
+1) Odsazení je použito pouze v horní a/nebo spodní části elementu div. Elementy vnořené v elementu div obsahují odsazení po stranách. Tímto způsobem není třeba „počítat“ rámečkový model. Je třeba si uvědomit, že pokud k samotnému elementu div přidáte boční odsazení nebo okraj, budou tyto hodnoty spolu se zadanou šířkou použity k určení *celkové* šířky. Postupovat můžete také takovým způsobem, že z elementu div odstraníte hodnotu odsazení a přidáte do něj druhý element div bez zadané šířky a s odsazením, které ve vašem návrhu chcete použít.
+
+*/
+.content {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+
+
+.menu {
+	text-align: center;
+	border: solid;
+}
+
+.login {
+	width: auto;
+	text-align: right;
+	vertical-align:middle;
+}
+
+.header {
+	height: 80px;
+	background-color:#66CC33;
+}
+
+.footer {
+	height: 80px;
+	background-color:#66CC33;
+}
+
+
+
+
+
+/* ~~ Různé třídy plovoucích elementů, vymazání elementů ~~ */
+.fltrt {  /* Tuto třídu můžete použít k umístění plovoucího elementu v pravé části stránky. Plovoucí element se musí nacházet před elementem, vedle kterého má být na stránce umístěn. */
+	float: right;
+	margin-right: 10px;	
+}
+.fltlft { /* Tuto třídu můžete použít k umístění plovoucího elementu v levé části stránky. Plovoucí element se musí nacházet před elementem, vedle kterého má být na stránce umístěn. */
+	float: left;
+	margin-left: 10px;
+}
+.clearfloat { /* Pokud je z kontejneru odebrána vlastnost overflow:hidden, můžete tuto třídu aplikovat na prázdný element div nebo <br /> jako konečný element po posledním plovoucím elementu div (v rámci kontejneru). */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
