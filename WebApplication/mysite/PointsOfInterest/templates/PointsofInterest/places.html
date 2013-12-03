@@ -46,11 +46,21 @@
   <div class="header">
   </div>
   	<div class="menu_div">
-    		<table class="menu_table"><tr class="menu"><td><a href="index.html">Domov</a></td><td><a href="friends.html">Priatelia</a></td><td><a href="">Moje miesta</a></td><td><a href="null">Nastavenie</a></td></tr></table>
+    	<table class="menu_table">
+				<tr class="menu makeborder">
+					<td><a href="{% url 'PointsOfInterest:index' %}">Domov</a></td>
+					<td><a href="{% url 'PointsOfInterest:friends' %}">Priatelia</a></td>
+					<td><a href="{% url 'PointsOfInterest:places' %}">Moje miesta</a></td>
+					{% if request.session.logged > 0 %}
+					<td><a href="{% url 'PointsOfInterest:login' %}">Login out</a></td>
+					{% else %}
+					<td><a href="{% url 'PointsOfInterest:logout' %}">Logout</a></td>
+					{% endif %}
+				</tr>
+			</table>
    	</div>
   <div class="content">
   
-	{% load url from future %}
 	{% for place in places %}
   	<div class="places_place">
 	<div class="place_title"><a href="{% url 'PointsOfInterest:place' place.id %}">{{place.title}}</a></div>

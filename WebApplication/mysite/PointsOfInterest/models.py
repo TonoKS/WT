@@ -32,6 +32,10 @@ class CreatePoi(forms.Form):
 	description = forms.CharField(required=True, widget=forms.Textarea, initial="")
 	latitude = forms.CharField(widget=forms.HiddenInput)
 	longitude = forms.CharField(widget=forms.HiddenInput)
+
+class Login(forms.Form):
+	username = forms.CharField(required=True, max_length=30, initial="")
+	password = forms.CharField(max_length=32, widget=forms.PasswordInput, initial="")
 	#widget=forms.HiddenInput
 
 

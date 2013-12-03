@@ -1,24 +1,74 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
+
+
+from django.contrib.auth.models import User
 
 
 from PointsOfInterest.models import PointOfInterest
 from PointsOfInterest.models import CreatePoi
+from PointsOfInterest.models import Login
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at our exciting site about Points of Interest")
+	return HttpResponse("Hello, world. You're at our exciting site about Points of Interest")
+
+def loggingout(request):
+	auth.logout(request)
+	template = loader.get_template('PointsOfInterest/login.html')
+	context = RequestContext(request, {	})
+	return HttpResponse(template.render(context))
+
+
+def logging(request):
+	#request.session['test'] = 'test'
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				request.session['logged'] = user.id
+				# Redirect to a success page.
+				template = loader.get_template('PointsOfInterest/login.html')
+				context = RequestContext(request, { 'logged' : True })
+				return HttpResponse(template.render(context))
+			else:
+				# Return a 'disabled account' error message
+				return HttpResponse("Ucet neaktivny")
+		else:
+			# Return an 'invalid login' error message.
+			# return HttpResponse("Neprihlaseny")
+			template = loader.get_template('PointsOfInterest/login.html')
+			context = RequestContext(request, { 'message' :"Nespravne prihlasovacie udaje", 'logged' : False,	})
+			return HttpResponse(template.render(context))
+	elif 'logged' in request.session:
+		template = loader.get_template('PointsOfInterest/login.html')
+		context = RequestContext(request, { 'message' :"Uz ste prihlaseny", 'logged' : True,	})
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('PointsOfInterest/login.html')
+		context = RequestContext(request, { 'logged' : False, })
+		return HttpResponse(template.render(context))
+
+
 
 def place(request, placeid):
-    place = PointOfInterest.objects.get(id=placeid)
-    template = loader.get_template('PointsOfInterest/place.html')
-    context = RequestContext(request, {
-        'place': place,
-        })
-    return HttpResponse(template.render(context))
+	place = PointOfInterest.objects.get(id=placeid)
+	template = loader.get_template('PointsOfInterest/place.html')
+	context = RequestContext(request, {
+		'place': place,
+		})
+	return HttpResponse(template.render(context))
 
-def places(request, userid):
+@login_required(login_url='/POI/login/')
+def places(request):
+	userid = request.session['logged']
 	places = PointOfInterest.objects.filter(user_id=userid)
 	template = loader.get_template('PointsOfInterest/places.html')
 	context = RequestContext(request, {
