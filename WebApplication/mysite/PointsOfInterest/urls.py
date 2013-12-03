@@ -7,4 +7,7 @@ urlpatterns = patterns('PointsOfInterest',
 	#url(r'^place/(?P<placeid>\d+)/$', views.place, name='place'),
 	url(r'^place/(?P<placeid>\d+)/$', views.place, name='place'),
 	url(r'^(?P<userid>\d+)/places/$', views.places, name='places'),
+	url(r'^friends/$', views.friends, name='friends' ),
+	url(r'^settings/$', views.settings, name='settings' ),
+	url(r'^createpoi/$', views.createpoi, name='createpoi' ),
 )

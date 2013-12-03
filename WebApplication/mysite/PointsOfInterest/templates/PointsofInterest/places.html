@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Dokument bez názvu</title>
+<title>Moje body</title>
 <link href="/static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -11,19 +11,24 @@
 		function initialize()
 		{
 		{% for place in places %}
-        var mapOptions = {
-          center: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+        var mapOptions{{forloop.counter}} = {
+			center: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
+			zoom: 12,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: false,
+			navigationControl: false,
+			mapTypeControl: false,
+			scaleControl: false,
+			draggable: false
         };
-        var map = new google.maps.Map(document.getElementById("map-canvas-{{forloop.counter}}"), mapOptions);
+        var map{{forloop.counter}} = new google.maps.Map(document.getElementById("map-canvas-{{forloop.counter}}"), mapOptions{{forloop.counter}});
 		
-		var MarkerOptions = {
+		var MarkerOptions{{forloop.counter}} = {
 			position: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
-			map: map,
-			title: {{place.title}}
+			map: map{{forloop.counter}},
+			title: "{{place.title}} [{{place.latitude}}°, {{place.longitude}}°]"
 		};
-		var marker = new google.maps.Marker(MarkerOptions);
+		var marker{{forloop.counter}} = new google.maps.Marker(MarkerOptions{{forloop.counter}});
 		{% endfor %}
 		}
       google.maps.event.addDomListener(window, 'load', initialize);
@@ -45,10 +50,11 @@
    	</div>
   <div class="content">
   
+	{% load url from future %}
 	{% for place in places %}
   	<div class="places_place">
-  	<div id="map-canvas-{{forloop.counter}}" class="places_map"></div>
-    <div align="center"><a href="/POI/place/{{place.id}}">{{place.title}}</a></div>
+	<div class="place_title"><a href="{% url 'PointsOfInterest:place' place.id %}">{{place.title}}</a></div>
+  	<div id="map-canvas-{{forloop.counter}}" class="place_map"></div>
     </div>
 	{% endfor %}
     
