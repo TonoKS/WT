@@ -1,20 +1,17 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Moje body</title>
-<link href="/static/style.css" rel="stylesheet" type="text/css">
+{% extends "PointsOfInterest/base.html" %}
 
+{% block title %}Moje body{% endblock %}
 
+{% block javascript %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC5vyrqbcCQRVny8dQP5KhGq3W96kkfcU&sensor=false"></script>
 	<script type="text/javascript">
 		function initialize()
 		{
 		{% for place in places %}
-        var mapOptions{{forloop.counter}} = {
+      var mapOptions{{forloop.counter}} = {
 			center: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
-			zoom: 12,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			zoom: 14,
+			mapTypeId: google.maps.MapTypeId.HYBRID,
 			scrollwheel: false,
 			navigationControl: false,
 			mapTypeControl: false,
@@ -33,44 +30,32 @@
 		}
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-  </head>
+{% endblock %}
 
+{% block submenu %}
+<div class="menu_div margbot">
+	<div class="fltlft">
+		<ul id="menu">
+			<li><a href="{% url 'POI:mybigmap' %}" target="blank">AllInOne</a></li>
+			<li><a href="{% url 'POI:createpoi' %}">Vytvoriť nový bod</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
 
+{% block header %}
+Moje body
+{% endblock %}
 
-</head>
-
-<body>
-
-<div class="container">
-
-  <div class="header">
-  </div>
-  	<div class="menu_div">
-    	<table class="menu_table">
-				<tr class="menu makeborder">
-					<td><a href="{% url 'PointsOfInterest:index' %}">Domov</a></td>
-					<td><a href="{% url 'PointsOfInterest:friends' %}">Priatelia</a></td>
-					<td><a href="{% url 'PointsOfInterest:places' %}">Moje miesta</a></td>
-					{% if request.session.logged > 0 %}
-					<td><a href="{% url 'PointsOfInterest:login' %}">Login out</a></td>
-					{% else %}
-					<td><a href="{% url 'PointsOfInterest:logout' %}">Logout</a></td>
-					{% endif %}
-				</tr>
-			</table>
-   	</div>
-  <div class="content">
-  
+{%block content%}
+	{% if places %}
 	{% for place in places %}
-  	<div class="places_place">
-	<div class="place_title"><a href="{% url 'PointsOfInterest:place' place.id %}">{{place.title}}</a></div>
+  	<div class="place_container margbot">
+		<div class="place_title"><a href="{% url 'POI:place' place.id %}">{{place.title}}</a></div>
   	<div id="map-canvas-{{forloop.counter}}" class="place_map"></div>
     </div>
 	{% endfor %}
-    
-  	
-    <!-- end .content --></div>
-    <div class="footer"></div>
-  <!-- end .container --></div>
-</body>
-</html>
+	{% else %}
+	Nemáte vytvorené žiadne body.
+	{% endif %}
+{% endblock %}

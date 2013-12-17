@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{% block title %}Stránka{% endblock%}</title>
+<link href="/static/style.css" rel="stylesheet" type="text/css">
+{% block javascript %}{% endblock%}
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="headfoot"></div>
+  <div class="page">
+  	<div>
+				<div class="menu_div">
+					<div class="fltlft">
+						<ul id="menu">
+								{% if user.is_authenticated %}
+								<li><a href="{% url 'POI:myfriends' %}">Priatelia</a></li>
+								<li><a href="{% url 'POI:mypoints' %}">Moje miesta</a></li>
+								{% endif %}
+						</ul>
+					</div>
+					<div class="fltrt">
+						<ul id="menu">
+			
+							{% if user.is_authenticated %}
+							<li><a href="{% url 'POI:logout' %}">Logout</a></li>
+							<li><a>Prihlásený ako <b>{{user.username}}</b></a><li>
+							{% else %}
+							<li><a href="{% url 'POI:login' %}">Login</a></li>
+							<li><a>Zatiaľ neprihlásený</a><li>
+							{% endif %}
+			
+						</ul>
+					</div>
+				</div>
+			</div>
+	
+	
+			<div class="content makeborder makeshadow padlr">
+			{% block submenu %}
+			{% endblock %}
+			<div class="cntr margbot"><h3>
+			{% block header%}
+			{% endblock %}
+			</h3></div>
+			{% block content %}
+			{% endblock %}
+			</div>
+	</div>
+	
+
+	<div class="headfoot"></div>
+</div>
+
+</body>
+</html>

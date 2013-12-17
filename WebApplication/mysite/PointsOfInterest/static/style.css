@@ -7,15 +7,18 @@ body {
 	color: #000;
 }
 
+textarea {
+ resize: none;
+}
+
 /* ~~ Selektory elementu/tagu ~~ */
 ul, ol, dl { /* Vzhledem k odlišnosti jednotlivých prohlížečů je vhodné používat v seznamech nulové odsazení a okraje. Aby nedocházelo k odchylkám, můžete hodnoty zadat buď zde nebo u položek seznamu (LI, DT, DD). Pamatujte, že pokud neurčíte konkrétnější selektor, budou zde provedené úpravy přeneseny do seznamu .nav. */
 	padding: 0;
 	margin: 0;
 }
-h1, h2, h3, h4, h5, h6, p {
-	margin-top: 0;	 /* Odebráním horního okraje se můžete vyhnout situaci, kdy okraje přesáhnou určený element div. Zbývající spodní okraj zajistí oddělení od všech následujících elementů. */
-	padding-right: 15px;
-	padding-left: 15px; /* Přidáním odsazení po stranách elementů v rámci elementů div namísto jejich aplikace na samotné elementy div dojde k potlačení výpočtu rámečkového modelu. Stejného výsledku dosáhnete použitím vnořených tagů s odsazením po stranách. */
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 a img { /* Tento selektor umožňuje odebrat výchozí modré okraje, které v některých prohlížečích obklopují obrazy, v jejichž blízkosti se nachází odkaz. */
@@ -38,21 +41,64 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 	text-decoration: underline;
 }
 
-.menu_div {
-	width:500px;
-	border:solid;
-	border-width:thin;
-	margin-left: 20px;
-	margin-right: 20px;
-	margin-top: 10px;
+
+/* Zakladne prvky, menu, obsah */
+ul#menu {
+
+	float: left;
+	list-style: none;
+	width: auto; /*If tab effect is not being used, this will define how long the bottom border will be*/
 }
 
-.menu_table {
-	/*padding: 0px 10px;*/
-	width: inherit;
-	border:medium;
-	margin-left: auto;
-	margin-right: auto;
+ul#menu li {
+	display: inline;
+	list-style: none;
+}
+
+ul#menu li a {
+	margin-left:5px;
+	margin-right:5px;
+	margin-top:0px;
+	margin-bottom:0px;
+	color: #000000;
+	display: block;
+	float:left;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	line-height: 32px;
+	text-decoration: none;
+	vertical-align: middle;
+	padding: 0 10px;
+	background-image:url(/static/pic.png);
+	background-color:#000000; /*A basic background color is set incase the image will not load*/
+	border:1px solid #333333;
+}
+
+.page {
+ padding: 30px;
+}
+
+
+.menu_div {
+	overflow: auto;
+	/*overflow-x: hidden;
+	overflow-y: hidden;*/
+	border:solid;
+	border-width:thin;
+	padding: 10px;
+}
+
+.content {
+	margin-top: 20px;
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.headfoot {
+	height: 80px;
+	background-color:#77D63E;
 }
 
 
@@ -79,7 +125,9 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 }
 
 .comment {
-	height: 70px;
+	border:1px solid;
+	margin-bottom: 15px;
+	padding: 5px;
 }
 
 .post_map {
@@ -100,24 +148,19 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 }
 
 .places_place {
-	border:2px solid;
+	border:1px solid;
 	box-shadow: 5px 5px 5px #888888;
-	margin-left: 50px;
+	margin-left: 30px;
 	margin-top: 15px;
 	margin-bottom: 15px;
-	margin-right: 50px;
+	margin-right: 30px;
 }
 
-
-.place_container {
-	border:2px solid;
-	box-shadow: 5px 5px 5px #888888;
-	margin-left: 50px;
-	margin-right: 50px;
-}
 
 .place_map {
 	height: 250px;
+	border:1px solid;
+	box-shadow: 5px 5px 5px #888888;
 }
 
 .place_title {
@@ -126,21 +169,11 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 	margin-bottom: 5px;
 }
 
-.place_desc {
-	margin-top: 10px;
-	margin-bottom: 5px;
-}
-
-.place_gallery {
-	margin-top: 20px;
-	margin-left: 50px;
-	margin-right: 50px;
-}
 
 .createpoi_map {
-	border-left-width: 1px;
-	border-style: none none none solid;
-	height: 500px;
+	border-width: 1px;
+	border-style: solid;
+	height: 300px;
 	width: 500px;
 }
 
@@ -165,12 +198,7 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 1) Odsazení je použito pouze v horní a/nebo spodní části elementu div. Elementy vnořené v elementu div obsahují odsazení po stranách. Tímto způsobem není třeba „počítat“ rámečkový model. Je třeba si uvědomit, že pokud k samotnému elementu div přidáte boční odsazení nebo okraj, budou tyto hodnoty spolu se zadanou šířkou použity k určení *celkové* šířky. Postupovat můžete také takovým způsobem, že z elementu div odstraníte hodnotu odsazení a přidáte do něj druhý element div bez zadané šířky a s odsazením, které ve vašem návrhu chcete použít.
 
 */
-.content {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-right: 30px;
-	margin-left: 30px;
-}
+
 
 
 
@@ -185,30 +213,52 @@ a:hover, a:active, a:focus { /* S touto skupinou selektorů můžete uživateli
 	vertical-align:middle;
 }
 
-.header {
-	height: 80px;
-	background-color:#66CC33;
+.cntr {
+	align: center;
+	text-align: center;
 }
 
-.footer {
-	height: 80px;
-	background-color:#66CC33;
+/*prvy div pre centrovanie tabulky*/
+.tabcenter1 {
+  height: 100%;
+  width: 100%;
+  display: table;
 }
 
+/*druhy div pre centrovanie tabulky*/
+.tabcenter2 {
+  vertical-align: middle;
+  display: table-cell;
+  height: 100%;
+}
 
+/*centrovana tabulka*/
+.tabcenter3 {
+  margin: 0 auto;
+ }
+ 
+.pad15 {
+	padding: 15px;
+}
 
+.padlr {
+	padding-left: 15px;
+	padding-right: 15px;
+}
 
+.margbot {
+	margin-bottom: 15px;
+}
 
-/* ~~ Různé třídy plovoucích elementů, vymazání elementů ~~ */
-.fltrt {  /* Tuto třídu můžete použít k umístění plovoucího elementu v pravé části stránky. Plovoucí element se musí nacházet před elementem, vedle kterého má být na stránce umístěn. */
+.fltrt {
 	float: right;
-	/*margin-right: 10px;	*/
 }
-.fltlft { /* Tuto třídu můžete použít k umístění plovoucího elementu v levé části stránky. Plovoucí element se musí nacházet před elementem, vedle kterého má být na stránce umístěn. */
+
+.fltlft {
 	float: left;
-	/*margin-left: 10px;*/
 }
-.clearfloat { /* Pokud je z kontejneru odebrána vlastnost overflow:hidden, můžete tuto třídu aplikovat na prázdný element div nebo <br /> jako konečný element po posledním plovoucím elementu div (v rámci kontejneru). */
+
+.clearfloat {
 	clear:both;
 	height:0;
 	font-size: 1px;

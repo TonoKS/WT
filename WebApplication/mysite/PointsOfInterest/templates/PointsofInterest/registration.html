@@ -1,0 +1,71 @@
+{% extends "PointsOfInterest/base.html" %}
+
+{% block title %}Registrácia{% endblock %}
+
+{% block javascript %}{% endblock %}
+
+{% block header %}
+Registrácia
+{% endblock %}
+
+{% block submenu %}
+<div class="menu_div margbot">
+	<div class="fltlft">
+		<ul id="menu">
+			<li><a href="{% url 'POI:login' %}">Prihlásenie</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %} 
+<div  class="cntr">
+	<div>
+	{% if exist or nsame %}
+	<div>
+		{% if exist %}
+			Tento login je už obsadený.</br>
+		{% endif %}
+		{% if nsame %}
+			Heslá sa nezhodujú.</br>
+		{% endif %}
+	</div>
+	{% endif %}
+	{% if not user.is_authenticated %}
+	<div class="tabcenter1">
+	<div class="tabcenter2">
+	<form action="{% url 'POI:registration' %}" method="post">
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+		{{ form.username.errors }}
+		{{ form.email.errors }}
+		{{ form.password.errors }}
+		{{ form.passagain.errors }}
+		<table class="tabcenter3">
+			<tr>
+				<th align="right">Login:</th><td>{{ form.username }}</td>
+			</tr>
+			<tr>
+				<th align="right">E-mail:</th><td>{{ form.email }}</td>
+			</tr>
+			<tr>
+				<th align="right">Heslo:</th><td>{{ form.password }}</td>
+			</tr>
+			<tr>
+				<th align="right">Heslo znova:</th><td>{{ form.passagain.errors }}{{ form.passagain }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Registrovať"></td>
+			</tr>
+		</table>
+	</form>
+	</div>
+	</div>
+	{% else %}
+	Už te prihlásený ako <b>{{user.username}}</b>, pre registráciu sa odhláste.
+	{% endif %}
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "PointsOfInterest/base.html" %}
+
+{% block title %}Potvrdiť{% endblock %}
+
+
+{% block javascript %}
+{% if qst = 1 %}
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC5vyrqbcCQRVny8dQP5KhGq3W96kkfcU&sensor=false"></script>
+	<script type="text/javascript">
+	function initialize()
+	{
+      var mapOptions = {
+        center: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map-canvas-01"), mapOptions);
+
+	var MarkerOptions = {
+		position: new google.maps.LatLng({{place.latitude}}, {{place.longitude}}),
+		map: map,
+		title: "{{place.title}} [{{place.latitude}}°, {{place.longitude}}°]"
+	};
+	var marker = new google.maps.Marker(MarkerOptions);
+	}
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
+{% elif qst = 2 %}
+{% elif qst = 3 %}
+{% elif qst = 4 %}
+{% endif %}
+{% endblock %}
+	
+	
+	
+{% block header %}
+{% if qst = 1 %}
+	Odstániť bod?
+{% elif qst = 2 %}
+	Potvrdiť priateľstvo?
+{% elif qst = 3 %}
+	Odoslať žiadosť?
+{% elif qst = 4 %}
+	Zrušiť žiadosť?
+{% elif qst = 5 %}
+	Zrušiť žiadosť?
+{% elif qst = 6 %}
+	Zrušiť žiadosť?
+{% endif %}
+{% endblock %}
+	
+	
+	
+{%block content%}
+{% if qst = 1 %}
+<div class="cntr">
+	Naozaj odstrániť tento bod?<br>
+	{{place.title}}</br>
+	{{place.description}}</br>
+	<div id="map-canvas-01" class="place_map"></div>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:poidel' place.id %}" method="post">{% csrf_token %}
+		<input type="submit" value="Odstrániť"/></div>
+	</form>
+</div>
+{% elif qst = 2 %}
+<div class="cntr">
+	Chcete potvrdiť priateľstvo s používateľom {{uuser.username}}?<br>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:fsconfirm' uuser.username %}" method="post">{% csrf_token %}
+		<input type="submit" value="Potvrdiť"/>
+		</form>
+	</div>
+</div>
+{% elif qst = 3 %}
+<div class="cntr">
+	Chcete odoslať žiadosť o priateľstvo používateľovi {{uuser.username}}?<br>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:fssend' uuser.username %}" method="post">{% csrf_token %}
+		<input type="submit" value="Odoslať"/>
+		</form>
+	</div>
+</div>
+{% elif qst = 4 %}
+<div class="cntr">
+	Chcete zrušiť žiadosť, ktorá bola odoslaná používateľovi {{uuser.username}}?<br>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:fscancel' uuser.username %}" method="post">{% csrf_token %}
+		<input type="submit" value="Zrušiť"/>
+		</form>
+	</div>
+</div>
+{% elif qst = 5 %}
+<div class="cntr">
+	Chcete zrušiť žiadosť, ktorá bola prijatá od používateľa {{uuser.username}}?<br>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:fscancel' uuser.username %}" method="post">{% csrf_token %}
+		<input type="submit" value="Zrušiť"/>
+		</form>
+	</div>
+</div>
+{% elif qst = 6 %}
+<div class="cntr">
+	Chcete zrušiť priateľstvo medzi Vami a používateľom {{uuser.username}}?<br>
+	<div style="padding-top: 5px;">
+		<form action="{% url 'POI:fscancel' uuser.username %}" method="post">{% csrf_token %}
+		<input type="submit" value="Zrušiť"/>
+		</form>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

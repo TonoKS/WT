@@ -16,9 +16,8 @@
 			{% if form.latitude.value != "" %}
 			var loadedloc = new google.maps.LatLng({{form.latitude.value}},{{form.longitude.value}});
 			var mapOptions = {
-				zoom: 14,
-				center: loadedloc,
-				mapTypeId: google.maps.MapTypeId.HYBRID
+				zoom: 8,
+				center: loadedloc
 			};
 			map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 			marker = new google.maps.Marker({
@@ -31,12 +30,14 @@
 			var myLatlng = new google.maps.LatLng(0,0);
 			var mapOptions = {
 				zoom: 1,
-				center: myLatlng,
-				mapTypeId: google.maps.MapTypeId.HYBRID
+				center: myLatlng
 			};
 			map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 			{% endif %}
+			
+			
 
+			
 			google.maps.event.addListener(map, 'click', function(event) {
 				placeMarker(event.latLng); });
 			}
@@ -74,7 +75,7 @@
 			<div id="map-canvas" class="createpoi_map"></div>
 		</div>
 		<div width="auto">
-			<div align="center"><h3>Vytvoriť bod</h3></div>
+			<div align="center"><h3>Vytvoriť nový bod</h3></div>
 			<div>
 				<form action="{% url 'POI:createpoi' %}" method="post">{% csrf_token %}
 
@@ -87,16 +88,10 @@
 						<label for="id_description">Popis bodu:</label>{{ form.description.errors }}
 						{{ form.description }}
 					</div>
-					<div class="fieldWrapper">
-						<label for="id_category">Zdieľanie:</label></br>{{ form.category.errors }}
-						{{ form.category.0 }}</br>
-						{{ form.category.1 }}</br>
-						{{ form.category.2 }}
-					</div>
 					
 					<div id="map_latitude">{{ form.latitude }}</div>
 					<div id="map_longitude">{{ form.longitude }}</div>
-					<div style="padding-top: 5px;"><input type="submit" value="Uložiť"/></div>
+					<div style="padding-top: 5px;"><input type="submit" value="Vytvoriť tento bod"/></div>
 				</form>
 			</div>
 		<div class="clearfloat"></div>

@@ -1,9 +1,7 @@
 from django.contrib import admin
-from PointsOfInterest.models import User
-from PointsOfInterest.models import CategoryOfPoi
-from PointsOfInterest.models import PointOfInterest
+from PointsOfInterest.models import PointOfInterest, Friend
+from django.contrib.auth.models import User
 
-admin.site.register(User)
-admin.site.register(CategoryOfPoi)
 admin.site.register(PointOfInterest)
+admin.site.register(Friend)
 # Register your models here.

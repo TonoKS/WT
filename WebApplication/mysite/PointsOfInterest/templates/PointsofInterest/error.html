@@ -1,0 +1,35 @@
+{% extends "PointsOfInterest/base.html" %}
+
+{% block title %}Chyba{% endblock %}
+
+{% block javascript %}{% endblock %}
+
+{% block header %}Chyba{% endblock %}
+
+{%block content%}
+<div class="cntr">
+{% if err = 0 %}
+	Neznama chyba!
+{% elif err = 1 %}
+	Nemáte oprávnenie na úpravu tohto bodu!
+{% elif err = 2 %}
+	Nemáte oprávnenie na odstránenie tohto bodu!
+{% elif err = 3 %}
+	Nemôžete potvrdiť vami odoslanú žiadosť!
+{% elif err = 4 %}
+	Vaše priateľstvo už je potvrdené!
+{% elif err = 5 %}
+	Žiadost už bola odoslaná!
+{% elif err = 6 %}
+	Používateľ {{username}} už poslal žiadosť Vám!
+{% elif err = 7 %}
+	Vaše priateľstvo už je potvrdené!
+{% elif err = 8 %}
+	Medzi vami a používateľom {{username}} nebola vytvorená žiadosť!
+{% elif err = 9 %}
+	Nemáte oprávnenie prezerať tento bod!
+{% elif err = 10 %}
+	Nemáte oprávnenie vymazať tento komentár!
+{% endif %}
+</div>
+{% endblock %}

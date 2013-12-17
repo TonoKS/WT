@@ -1,0 +1,46 @@
+{% extends "PointsOfInterest/base.html" %}
+
+{% block title %}Vyhľadávanie{% endblock %}
+
+{% block javascript %} {% endblock %}
+
+{% block header %}
+Vyhľadávanie používateľov
+{% endblock %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %} 
+<div  class="cntr mergbot">
+	<div class="tabcenter1">
+	<div class="tabcenter2">
+		<form action="{% url 'POI:find' %}" method="post">
+			{% csrf_token %}
+			{{ form.non_field_errors }}
+			{{ form.username.errors }}
+			<table class="tabcenter3">
+				<tr>
+					<th align="right">Hľadaný výraz:</th><td>{{ form.username }}</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Hľadať"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	</div>
+</div>
+<div  class="mergbot">
+	{% if found %}
+		<h5>Nájdení používatelia:</h5>
+		{% for uuser in found %}
+			{% if user != uuser %}
+				<a href="{% url 'POI:user' uuser %}">{{uuser}}</a></br>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</div>
+
+
+{% endblock %}

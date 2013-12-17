@@ -1,6 +1,6 @@
 {% extends "PointsOfInterest/base.html" %}
 
-{% block title %}Nový bod{% endblock %}
+{% block title %}Upraviť bod{% endblock %}
 
 {% block javascript %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC5vyrqbcCQRVny8dQP5KhGq3W96kkfcU&sensor=false"></script>
@@ -9,7 +9,6 @@
 
 		var map;
 		var marker;
-		
 		
 		function initialize() {
 		
@@ -74,9 +73,9 @@
 			<div id="map-canvas" class="createpoi_map"></div>
 		</div>
 		<div width="auto">
-			<div align="center"><h3>Vytvoriť bod</h3></div>
+			<div align="center"><h3>Upraviť bod</h3></div>
 			<div>
-				<form action="{% url 'POI:createpoi' %}" method="post">{% csrf_token %}
+				<form action="{% url 'POI:poiedit' place.id %}" method="post">{% csrf_token %}
 
 					{{ form.non_field_errors }}
 					<div class="fieldWrapper">
